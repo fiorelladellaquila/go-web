@@ -1,11 +1,13 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	handlerProducto "github.com/aldogayaladh/go-web/cmd/server/handler/producto"
 	"github.com/aldogayaladh/go-web/internal/domain/producto"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -13,6 +15,11 @@ const (
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	router := gin.Default()
 
