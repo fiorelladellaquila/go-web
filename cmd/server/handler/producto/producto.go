@@ -2,7 +2,6 @@ package producto
 
 import (
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/aldogayaladh/go-web/internal/domain/producto"
@@ -21,17 +20,6 @@ func NewControladorProducto(service producto.Service) *Controlador {
 
 func (c *Controlador) GetAll() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
-		token := os.Getenv("TOKEN")
-		tokenHeader := ctx.GetHeader("tokenPostman")
-
-		if tokenHeader != token {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"mensaje": "token invalido",
-			})
-			return
-		}
-
 		productos, err := c.service.GetAll(ctx)
 
 		if err != nil {
