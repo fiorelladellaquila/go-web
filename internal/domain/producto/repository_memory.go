@@ -2,14 +2,7 @@ package producto
 
 import (
 	"context"
-	"errors"
 	"time"
-)
-
-// Errores
-var (
-	ErrEmptyList = errors.New("la lista de productos esta vacia")
-	ErrNotFound  = errors.New("producto no encontrado")
 )
 
 // Base de datos en memoria.
@@ -45,22 +38,25 @@ var (
 	}
 )
 
-type Repository interface {
-	GetAll(ctx context.Context) ([]Producto, error)
-	Delete(ctx context.Context, id int) error
-}
-
-type repository struct {
+type repositoryMemory struct {
 	db []Producto
 }
 
-func NewRepository() Repository {
-	return &repository{
+func NewRepositoryMemory() Repository {
+	return &repositoryMemory{
 		db: productos,
 	}
 }
 
-func (r *repository) GetAll(ctx context.Context) ([]Producto, error) {
+// Create creates a new product.
+func (r *repositoryMemory) Create(ctx context.Context, producto Producto) (Producto, error) {
+	r.db = append(r.db, producto)
+
+	return producto, nil
+}
+
+// GetAll returns all products.
+func (r *repositoryMemory) GetAll(ctx context.Context) ([]Producto, error) {
 	if len(r.db) < 1 {
 		return []Producto{}, ErrEmptyList
 	}
@@ -68,7 +64,19 @@ func (r *repository) GetAll(ctx context.Context) ([]Producto, error) {
 	return r.db, nil
 }
 
-func (r *repository) Delete(ctx context.Context, id int) error {
+// GetByID returns a product by its ID.
+func (r *repositoryMemory) GetByID(ctx context.Context, id int) (Producto, error) {
+	for _, producto := range r.db {
+		if producto.ID == id {
+			return producto, nil
+		}
+	}
+
+	return Producto{}, ErrNotFound
+}
+
+// Delete deletes a product.
+func (r *repositoryMemory) Delete(ctx context.Context, id int) error {
 
 	for key, producto := range r.db {
 		if producto.ID == id {
