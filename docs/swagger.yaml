@@ -11,7 +11,7 @@ definitions:
     properties:
       data: {}
     type: object
-host: localhost:8080
+host: localhost:9090
 info:
   contact:
     email: support@swagger.io
@@ -120,6 +120,28 @@ paths:
         name: id
         required: true
         type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/web.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/web.errorResponse'
+      summary: producto example
+      tags:
+      - producto
+    put:
+      consumes:
+      - application/json
+      description: Update producto by id
       produces:
       - application/json
       responses:

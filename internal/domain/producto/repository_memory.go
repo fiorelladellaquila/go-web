@@ -75,6 +75,18 @@ func (r *repositoryMemory) GetByID(ctx context.Context, id int) (Producto, error
 	return Producto{}, ErrNotFound
 }
 
+// Update updates a product.
+func (r *repositoryMemory) Update(ctx context.Context, producto Producto) (Producto, error) {
+	for key, p := range r.db {
+		if p.ID == producto.ID {
+			r.db[key] = producto
+			return producto, nil
+		}
+	}
+
+	return Producto{}, ErrNotFound
+}
+
 // Delete deletes a product.
 func (r *repositoryMemory) Delete(ctx context.Context, id int) error {
 

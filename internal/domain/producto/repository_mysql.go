@@ -108,6 +108,41 @@ func (r *repository) GetByID(ctx context.Context, id int) (Producto, error) {
 	return producto, nil
 }
 
+// Update updates a product.
+func (r *repository) Update(ctx context.Context, producto Producto) (Producto, error) {
+	statement, err := r.db.Prepare(QueryUpdateProduct)
+	if err != nil {
+		return Producto{}, err
+	}
+
+	defer statement.Close()
+
+	result, err := statement.Exec(
+		producto.Name,
+		producto.Quantity,
+		producto.CodeValue,
+		producto.Expiration,
+		producto.IsPublished,
+		producto.Price,
+		producto.ID,
+	)
+
+	if err != nil {
+		return Producto{}, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return Producto{}, err
+	}
+
+	if rowsAffected < 1 {
+		return Producto{}, ErrNotFound
+	}
+
+	return producto, nil
+}
+
 // Delete deletes a product.
 func (r *repository) Delete(ctx context.Context, id int) error {
 	result, err := r.db.Exec(QueryDeleteProduct, id)

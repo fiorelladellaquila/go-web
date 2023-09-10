@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:9090",
     "basePath": "/api/v1",
     "paths": {
         "/ping": {
@@ -125,6 +125,39 @@
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/web.response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/web.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/web.errorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update producto by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "producto"
+                ],
+                "summary": "producto example",
                 "responses": {
                     "200": {
                         "description": "OK",

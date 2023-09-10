@@ -18,5 +18,6 @@ type Repository interface {
 	Create(ctx context.Context, producto Producto) (Producto, error)
 	GetAll(ctx context.Context) ([]Producto, error)
 	GetByID(ctx context.Context, id int) (Producto, error)
+	Update(ctx context.Context, producto Producto) (Producto, error)
 	Delete(ctx context.Context, id int) error
 }

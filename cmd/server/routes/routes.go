@@ -54,6 +54,7 @@ func (r *router) buildProductRoutes() {
 	r.routerGroup.POST("/productos", middleware.Authenticate(), controlador.Create())
 	r.routerGroup.GET("/productos", middleware.Authenticate(), controlador.GetAll())
 	r.routerGroup.GET("/productos/:id", middleware.Authenticate(), controlador.GetByID())
+	r.routerGroup.PUT("/productos/:id", middleware.Authenticate(), controlador.Update())
 	r.routerGroup.DELETE("/productos/:id", middleware.Authenticate(), controlador.Delete())
 
 }

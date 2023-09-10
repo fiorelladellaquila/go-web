@@ -153,6 +153,39 @@ const docTemplate = `{
                     }
                 }
             },
+            "put": {
+                "description": "Update producto by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "producto"
+                ],
+                "summary": "producto example",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/web.response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/web.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/web.errorResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "Delete producto by id",
                 "consumes": [
@@ -226,7 +259,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:9090",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "Swagger Example API",

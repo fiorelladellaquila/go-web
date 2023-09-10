@@ -14,6 +14,7 @@ type Service interface {
 	Create(ctx context.Context, requestProduct RequestProducto) (Producto, error)
 	GetAll(ctx context.Context) ([]Producto, error)
 	GetByID(ctx context.Context, id int) (Producto, error)
+	Update(ctx context.Context, requestProduct RequestProducto, id int) (Producto, error)
 	Delete(ctx context.Context, id int) error
 }
 
@@ -56,6 +57,19 @@ func (s *service) GetByID(ctx context.Context, id int) (Producto, error) {
 	}
 
 	return producto, nil
+}
+
+// Update updates a product.
+func (s *service) Update(ctx context.Context, requestProduct RequestProducto, id int) (Producto, error) {
+	producto := requestToProducto(requestProduct)
+	producto.ID = id
+	response, err := s.repository.Update(ctx, producto)
+	if err != nil {
+		log.Println("log de error en service de producto", err.Error())
+		return Producto{}, errors.New("error en servicio. Metodo Update")
+	}
+
+	return response, nil
 }
 
 // Delete deletes a product.
