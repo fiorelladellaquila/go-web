@@ -62,16 +62,16 @@ func main() {
 	}
 
 	// Create a new Gin engine.
-	router := gin.New()
-	router.Use(gin.Recovery())
+	engine := gin.New()
+	engine.Use(gin.Recovery())
 	// Add the logger middleware.
-	router.Use(middleware.Logger())
+	engine.Use(middleware.Logger())
 
 	// Add the swagger handler.
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Run the application.
-	runApp(db, router)
+	runApp(db, engine)
 
 	// Close the connection.
 	defer db.Close()
